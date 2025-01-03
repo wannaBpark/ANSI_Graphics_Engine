@@ -1,4 +1,5 @@
 ﻿#include <common/ansi_common.h>
+#include "core/ansi_core.h"
 
 int main()
 {
@@ -18,6 +19,12 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
+
+	// If fails to create singleton Core Instance, Terminate
+	if (!ansi::Core::CreateInstance()) {
+		glfwTerminate();
+		return -1;
+	}
 
 	glm::vec2 positions[3] = {
 		glm::vec2(-0.5f, -0.5f),
@@ -59,6 +66,8 @@ int main()
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
+
+	ansi::Core::DeleteInstance();
 
 	glfwTerminate();
 	return 0;
