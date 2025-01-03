@@ -1,4 +1,5 @@
 ﻿#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 int main()
 {
@@ -19,6 +20,13 @@ int main()
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
+	glm::vec2 positions[3] = {
+		glm::vec2(-0.5f, -0.5f),
+		glm::vec2(0.f, 0.5f),
+		glm::vec2(0.5f, -0.5f),
+	}; // 이전에 배치한 삼각형의 위치와 동일
+	bool isGoRight[3] = { true, true, true };
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -27,9 +35,23 @@ int main()
 
 		// PRIMITIVE : Triangle
 		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.f, 0.5f);
-		glVertex2f(0.5f, -0.5f);
+		for (size_t i = 0; i < 3; ++i) {
+			if (isGoRight[i]) {
+				positions[i].x += 1.0f;
+
+				if (positions[i].x > 1.0f) {
+					positions[i].x = 1.0f;
+					isGoRight[i] = false;
+				}
+			} else {
+				positions[i].x -= 1.0f;
+				if (positions[i].x < -1.0f) {
+					positions[i].x = -1.0f;
+					isGoRight[i] = true;
+				}
+			}
+			glVertex2f(positions[i].x, positions[i].y);
+		}
 		glEnd();
 
 		/* Swap front and back buffers */
