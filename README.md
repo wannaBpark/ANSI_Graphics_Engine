@@ -1,5 +1,5 @@
 # ANSI_Graphics
-This project is a simple OpenGL engine featuring multiple rendering scenes, developed as part of the Graphics Study in A.N.S.I. 2023.
+This walkthrough project is a simple OpenGL engine featuring multiple rendering scenes, developed as part of the Graphics Study in A.N.S.I. 2023.
 For more details, please refer to the original engine [ANSI_Graphics_Engine](https://github.com/shh1473/ANSI_Graphics_Engine), which serves as the foundation for this repository.
 
 ## Setup Instructions
