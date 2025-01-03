@@ -1,4 +1,5 @@
 #include "ansi_core.h"
+#include "timer/ansi_timer.h"
 
 namespace ansi
 {
@@ -23,12 +24,13 @@ namespace ansi
 	}
 
 	Core::Core()
+		: m_timer(new Timer())
 	{
 
 	}
 	Core::~Core()
 	{
-
+		SAFE_DELETE(m_timer);
 	}	
 }
 
