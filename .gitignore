@@ -1,0 +1,33 @@
+# Visual Studio related files
+.vs/
+.vs2022/
+*.vcxproj.user
+*.vcxproj.filters
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.ipch
+autoPCH/
+
+
+# Build directories
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]evelopment/
+[Dd]ist/
+[Dd]istPublic/
+Release/
+ReleasePublic/
+x64/
+x86/
+x86_64/
+
+# .NET Build results
+bin/
+obj/
+
+# Temporary files
+*.tmp
+*.swp
