@@ -1,5 +1,7 @@
-﻿#include <common/ansi_common.h>
+﻿#include "common/ansi_common.h"
+
 #include "core/ansi_core.h"
+#include "core/timer/ansi_timer.h"
 
 int main()
 {
@@ -19,6 +21,7 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
+	// glfwSwapInterval(0);				// 수직 동기화 (V-Sync) Deactivate
 
 	// If fails to create singleton Core Instance, Terminate
 	if (!ansi::Core::CreateInstance()) {
@@ -33,9 +36,20 @@ int main()
 	}; // 이전에 배치한 삼각형의 위치와 동일
 	bool isGoRight[3] = { true, true, true };
 
+	float timeSum{ 0.0f };
+	size_t frameCount{ 0 };
 	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
+	while (!glfwWindowShouldClose(window)) {
+		ansi::Core::GetTimer()->OnUpdate();
+
+		timeSum += DELTA_TIME;
+		++frameCount;
+		if (timeSum > 1.0f) {
+			std::cout << "FPS : " << frameCount << std::endl;
+			timeSum -= 1.0f;
+			frameCount = 0;
+		}
+
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -43,14 +57,14 @@ int main()
 		glBegin(GL_TRIANGLES);
 		for (size_t i = 0; i < 3; ++i) {
 			if (isGoRight[i]) {
-				positions[i].x += 1.0f;
+				positions[i].x += 1.0f * DELTA_TIME;
 
 				if (positions[i].x > 1.0f) {
 					positions[i].x = 1.0f;
 					isGoRight[i] = false;
 				}
 			} else {
-				positions[i].x -= 1.0f;
+				positions[i].x -= 1.0f * DELTA_TIME;
 				if (positions[i].x < -1.0f) {
 					positions[i].x = -1.0f;
 					isGoRight[i] = true;
