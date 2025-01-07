@@ -1,6 +1,7 @@
 #include "ansi_core.h"
 #include "timer/ansi_timer.h"
 #include "core/window/ansi_window.h"
+#include "core/gui/ansi_gui.h"
 
 namespace ansi
 {
@@ -28,6 +29,7 @@ namespace ansi
 	Core::Core()
 		: m_timer (new Timer())
 		, m_window(new Window())
+		, m_gui(new Gui())
 	{
 
 	}
@@ -35,11 +37,12 @@ namespace ansi
 	{
 		SAFE_DELETE(m_timer);
 		SAFE_DELETE(m_window);
+		SAFE_DELETE(m_gui);
 	}
 	bool Core::Initialize()
 	{
 		CHECK_RF(m_window->Initialize());		// If window Init fails -> then Core Init fails
-
+		CHECK_RF(m_gui->Initialize());
 		return true;
 	}
 

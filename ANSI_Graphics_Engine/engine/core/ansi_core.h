@@ -6,6 +6,7 @@ namespace ansi
 {
 	class Timer;						// 클래스 전방 선언
 	class Window;
+	class Gui;
 
 	class Core 
 	{
@@ -16,6 +17,7 @@ namespace ansi
 		static Core*   GetInstance() { return m_Instance; }				// 접근용 정적 함수
 		static Timer*  GetTimer()    { return m_Instance->m_timer; }
 		static Window* GetWindow()   { return m_Instance->m_window; }
+		static Gui* GetGui()		 { return m_Instance->m_gui; }
 		
 	private:
 		explicit Core();	// 생성자
@@ -28,6 +30,7 @@ namespace ansi
 
 		Timer*  m_timer;
 		Window* m_window;
+		Gui* m_gui;
 	};
 }
 
