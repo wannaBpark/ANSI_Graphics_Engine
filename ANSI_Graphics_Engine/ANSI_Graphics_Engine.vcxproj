@@ -137,12 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\gui\ansi_gui.cpp" />
     <ClCompile Include="engine\core\window\ansi_window.cpp" />
     <ClCompile Include="engine\core\timer\ansi_timer.cpp" />
     <ClCompile Include="engine\core\ansi_core.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\gui\ansi_gui.h" />
     <ClInclude Include="engine\core\window\ansi_window.h" />
     <ClInclude Include="engine\core\timer\ansi_timer.h" />
     <ClInclude Include="engine\core\ansi_core.h" />
