@@ -1,6 +1,7 @@
 #include "ansi_window.h"
 #include "core/timer/ansi_timer.h"
 #include "core/gui/ansi_gui.h"
+#include "scene/ansi_scene.h"
 
 namespace ansi 
 {
@@ -9,12 +10,16 @@ namespace ansi
 		, m_isBorderless(false)
 		, m_clientSize(1280.0f, 720.0f)
 		, m_window(nullptr)
+		, m_currentScene(nullptr)
+		, m_nextScene(nullptr)
 	{
 
 	}
 
 	Window::~Window()
 	{
+		SAFE_DELETE(m_currentScene);
+		SAFE_DELETE(m_nextScene);		// nxtScene 설정된 후 또는 장면 교체 직전 종료될 수 있기 때문에 제거 필요
 		glfwTerminate();
 	}
 
@@ -36,6 +41,10 @@ namespace ansi
 		PRINT("OpenGL Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
 		PRINT("");
 
+		/* 시작 장면 설정 및 적용*/
+		m_nextScene = new Scene();
+		CHECK_RF(ApplyChangeScene());
+
 		return true;
 	}
 
@@ -54,14 +63,12 @@ namespace ansi
 
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			glBegin(GL_TRIANGLES);
-			glVertex2f(-0.5f, -0.5f);
-			glVertex2f( 0.0f,  0.5f);
-			glVertex2f( 0.5f, -0.5f);
-			glEnd();
+			/* 장면 렌더링 */
+			CHECK_RF(m_currentScene->OnUpdate());
 
 			/* GUI Rendering */
 			if (Core::GetGui()->OnRenderBegin()) {	// 창이 접혀있다면(반환값=false) GUI 렌더 필요 X
+				CHECK_RF(m_currentScene->OnRenderGui());	// 장면에서 사용하는 GUI 바로 아래 기본 GUI 배치
 				CHECK_RF(OnRenderDefaultGui());
 			}
 			Core::GetGui()->OnRenderEnd();			// End(): Begin()과 페어 함수
@@ -72,6 +79,11 @@ namespace ansi
 
 			glfwSwapBuffers(m_window);
 			glfwPollEvents();
+
+			/* 예약한 다음 장면이 있을 경우, 장면 변경 */
+			if (m_nextScene) { 
+				CHECK_RF(ApplyChangeScene()); 
+			}
 		}
 
 		return true;
@@ -130,6 +142,19 @@ namespace ansi
 			/* 창모드 X -> 전체 화면으로 설정 */
 			glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 		}
+
+		return true;
+	}
+
+	bool Window::ApplyChangeScene()
+	{
+		SAFE_DELETE(m_currentScene);
+
+		m_currentScene = m_nextScene;
+		m_nextScene = nullptr;
+
+		CHECK_RF(m_currentScene->CreateResources());
+		CHECK_RF(m_currentScene->Initialize());
 
 		return true;
 	}
