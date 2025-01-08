@@ -42,7 +42,7 @@ namespace ansi
 		PRINT("");
 
 		/* 시작 장면 설정 및 적용*/
-		m_nextScene = new Scene();
+		m_nextScene = new Scene_A();
 		CHECK_RF(ApplyChangeScene());
 
 		return true;

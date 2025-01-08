@@ -14,5 +14,21 @@ namespace ansi
 		virtual bool OnRenderGui();
 
 	};
+
+	class Scene_A : public Scene
+	{
+	public:
+		virtual bool Initialize() override;
+		virtual bool OnUpdate() override;
+		virtual bool OnRenderGui() override;
+	};
+
+	class Scene_B : public Scene
+	{
+	public:
+		virtual bool Initialize() override;
+		virtual bool OnUpdate() override;
+		virtual bool OnRenderGui() override;
+	};
 }
 
