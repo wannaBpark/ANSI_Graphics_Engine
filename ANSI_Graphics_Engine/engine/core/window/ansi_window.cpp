@@ -2,6 +2,7 @@
 #include "core/timer/ansi_timer.h"
 #include "core/gui/ansi_gui.h"
 #include "scene/ansi_scene.h"
+#include "scene/test_scene/ansi_test_scene.h"
 
 namespace ansi 
 {
@@ -35,14 +36,14 @@ namespace ansi
 		GLFW_CHECK(glfwMakeContextCurrent(m_window));
 		GLFW_CHECK(glfwSwapInterval(1));
 
-		size_t result{ glewInit() };
+		unsigned result{ glewInit() };
 		CHECK_PRINT_RF(result == GLEW_OK, glewGetErrorString(result));
 		PRINT("GLEW Version: " + std::string(reinterpret_cast<const char*>(glewGetString(GLEW_VERSION))));
 		PRINT("OpenGL Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))));
 		PRINT("");
 
 		/* 시작 장면 설정 및 적용*/
-		m_nextScene = new Scene_A();
+		m_nextScene = new TestScene();
 		CHECK_RF(ApplyChangeScene());
 
 		return true;

@@ -1,4 +1,4 @@
-# shader _vertex			// 여기서부터 버텍스 셰이더
+# shader_vertex			// 여기서부터 버텍스 셰이더
 # version 460 core			// OpenGL 4.6 버전 사용 명시
 
 layout(location = 0) in vec3 position;	// [입력] - 버텍스 위치 (float 3개)
@@ -12,7 +12,7 @@ void main()
 	v_color = color;					// 버텍스 색상을 그대로 넘김
 }
 
-# shader _fragment
+# shader_fragment
 # version 460 core
 
 layout(location = 0) out vec4 FragColor;	// [출력] - 픽셀의 RGBA (float 4개)
