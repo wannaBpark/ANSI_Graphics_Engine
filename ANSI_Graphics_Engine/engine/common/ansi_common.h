@@ -1,7 +1,6 @@
 #pragma once
 #pragma once
 
-/* { 01 } */
 /* GLEW */
 #include <gl/glew.h>    // GLEW - 기본
 
@@ -37,7 +36,11 @@
 #include <vector>        // Vector              - 동적 배열
 #include <unordered_map> // Unordered Map       - 해시 테이블
 
-/* { 02 } */
+/* OpenGL 함수 실행 후 에러를 검사하는 함수 */
+bool CheckGLError(const char* filePath, int lineNumber);
+/* GLFW 함수 실행 후 에러를 검사하는 함수 */
+bool CheckGLFWError(const char* filePath, int lineNumber);
+
 /* 제거 - 단일 객체 제거 */
 #define SAFE_DELETE(ptr) if (ptr) { delete (ptr); (ptr) = nullptr; }
 /* 제거 - 배열 객체 제거 */
@@ -58,3 +61,12 @@
 #define CHECK_PRINT_RF(exp, str) if (!(exp)) { PRINT(str); return false; }
 /* 체크 - 표현식이 false일 경우 콘솔 창에 문자열 출력 후 nullptr 반환 */
 #define CHECK_PRINT_RN(exp, str) if (!(exp)) { PRINT(str); return nullptr; }
+
+/* OpenGL 함수에서 에러가 발생하면 에러 메시지와 해당 파일, 라인 정보를 출력 */
+#define GL_CHECK(glFunc) (glFunc); CheckGLError(__FILE__, __LINE__);
+/* OpenGL 함수에서 에러가 발생하면 에러 메시지와 해당 파일, 라인 정보를 출력하고 false 반환 */
+#define GL_CHECK_RF(glFunc) (glFunc); CHECK_RF(CheckGLError(__FILE__, __LINE__));
+/* OpenGL 함수에서 에러가 발생하면 에러 메시지와 해당 파일, 라인 정보를 출력하고 nullptr 반환 */
+#define GL_CHECK_RN(glFunc) (glFunc); CHECK_RN(CheckGLError(__FILE__, __LINE__));
+/* GLFW 함수에서 에러가 발생하면 에러 메시지와 해당 파일, 라인 정보를 출력하고 false 반환 */
+#define GLFW_CHECK(glfwFunc) (glfwFunc); CHECK_RF(CheckGLFWError(__FILE__, __LINE__));

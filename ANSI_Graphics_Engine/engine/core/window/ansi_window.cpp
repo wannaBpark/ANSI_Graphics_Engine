@@ -32,8 +32,8 @@ namespace ansi
 			static_cast<int>(m_clientSize.x),
 			static_cast<int>(m_clientSize.y),
 			"A.N.S.I. Graphics Engine", nullptr, nullptr), "[GLFW Error]: Window Creation");
-		glfwMakeContextCurrent(m_window);
-		glfwSwapInterval(1);
+		GLFW_CHECK(glfwMakeContextCurrent(m_window));
+		GLFW_CHECK(glfwSwapInterval(1));
 
 		size_t result{ glewInit() };
 		CHECK_PRINT_RF(result == GLEW_OK, glewGetErrorString(result));
@@ -77,8 +77,8 @@ namespace ansi
 			/*            HANDLING            */
 			/* ============================== */
 
-			glfwSwapBuffers(m_window);
-			glfwPollEvents();
+			GLFW_CHECK(glfwSwapBuffers(m_window));
+			GLFW_CHECK(glfwPollEvents());
 
 			/* 예약한 다음 장면이 있을 경우, 장면 변경 */
 			if (m_nextScene) { 
@@ -127,20 +127,20 @@ namespace ansi
 		if (m_isWindowed) {								// 창 모드 -> 해상도 조절 가능
 			if (m_isBorderless) {
 				/* 전체 해상도로 화면에 딱 맞게 설정 */
-				glfwSetWindowMonitor(m_window, nullptr, 0, 0,				// 두번째 매개변수(모니터 포인터)가 nullptr일 때, 창 모드로 인식함
-					mode->width, mode->height, mode->refreshRate);
+				GLFW_CHECK(glfwSetWindowMonitor(m_window, nullptr, 0, 0,				// 두번째 매개변수(모니터 포인터)가 nullptr일 때, 창 모드로 인식함
+					mode->width, mode->height, mode->refreshRate));
 			} else {
 				/* 현재 창 위치 가져오기 */
 				glm::ivec2 windowPosition(0);
-				glfwGetWindowPos(m_window, &windowPosition.x, &windowPosition.y);
+				GLFW_CHECK(glfwGetWindowPos(m_window, &windowPosition.x, &windowPosition.y));
 
 				/* GUI로 선택한 해상도로 설정 (밖으로 나가는 것을 방지하기 위해 모니터 왼쪽 상단으로부터 최소 50 픽셀의 간격을 둠 */
-				glfwSetWindowMonitor(m_window, nullptr, glm::max(windowPosition.x, 50), glm::max(windowPosition.y, 50), 
-					static_cast<int>(m_clientSize.x), static_cast<int>(m_clientSize.y), mode->refreshRate);
+				GLFW_CHECK(glfwSetWindowMonitor(m_window, nullptr, glm::max(windowPosition.x, 50), glm::max(windowPosition.y, 50),
+					static_cast<int>(m_clientSize.x), static_cast<int>(m_clientSize.y), mode->refreshRate));
 			} 
 		} else {
 			/* 창모드 X -> 전체 화면으로 설정 */
-			glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+			GLFW_CHECK(glfwSetWindowMonitor(m_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate));
 		}
 
 		return true;

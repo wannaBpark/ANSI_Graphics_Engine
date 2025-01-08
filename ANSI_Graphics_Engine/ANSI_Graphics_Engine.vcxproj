@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\common\ansi_common.cpp" />
     <ClCompile Include="engine\scene\ansi_scene.cpp" />
     <ClCompile Include="engine\core\gui\ansi_gui.cpp" />
     <ClCompile Include="engine\core\window\ansi_window.cpp" />
