@@ -9,6 +9,7 @@ int main()
 		result = 0;	
 	}
 
+	int* a = new int(); // Memory Leak on Purpose
 	ansi::Core::DeleteInstance();
 
 	return result;

@@ -19,6 +19,11 @@
 #include <imgui_impl_glfw.h>    // ImGui - GLFW 관련
 #include <imgui_impl_opengl3.h> // ImGui - OpenGL3 관련
 
+/* VLD */
+#if defined (DEBUG) || (_DEBUG)
+#include <vld.h>
+#endif
+
 /* C++ */
 #include <iostream>      // Input/Output Stream - 기본 입출력
 #include <fstream>       // File Stream         - 셰이더 로딩
