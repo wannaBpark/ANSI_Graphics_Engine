@@ -154,6 +154,9 @@
     <ClInclude Include="engine\core\ansi_core.h" />
     <ClInclude Include="engine\common\ansi_common.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="asset\shader\test.shader" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
