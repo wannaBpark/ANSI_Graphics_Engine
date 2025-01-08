@@ -1,7 +1,7 @@
 # shader _vertex			// 여기서부터 버텍스 셰이더
 # version 460 core			// OpenGL 4.6 버전 사용 명시
 
-layout(location = 0) in vec3 posiiton;	// [입력] - 버텍스 위치 (float 3개)
+layout(location = 0) in vec3 position;	// [입력] - 버텍스 위치 (float 3개)
 layout(location = 1) in vec3 color;		// [입력] - 버텍스 색상 (float 3개)
 
 out vec3 v_color;
