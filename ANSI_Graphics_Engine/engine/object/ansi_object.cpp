@@ -1,5 +1,7 @@
 #include "ansi_object.h"
 
+#include "object/component/ansi_component.h"
+
 namespace ansi
 {
 	using namespace std;
@@ -35,12 +37,19 @@ namespace ansi
 	bool Object::OnDefaultUpdate()
 	{
 		/* 제거된 모든 자식 오브젝트 제거 */
-		for (auto it = m_children.begin(); it != m_children.end()) {
+		for (auto it = m_children.begin(); it != m_children.end(); ) {
 			if (it->second->GetIsDeleted()) {
 				SAFE_DELETE(it->second);
 				it = m_children.erase(it);
 			} else {
 				++it;
+			}
+		}
+
+		/* 활성화된 모든 컴포넌트의 업데이트 */
+		for (const auto& it : m_components) {
+			if (it.second->GetIsEnabled()) {
+				CHECK_RF(it.second->OnUpdate());
 			}
 		}
 		
@@ -53,6 +62,15 @@ namespace ansi
 				CHECK_RF(it.second->OnDefaultUpdate());
 			}
 		}
+
+		/* 활성화된 모든 컴포넌트의 지연 업데이트 */
+		for (const auto& it : m_components) {
+			if (it.second->GetIsEnabled()) {
+				CHECK_RF(it.second->OnLateUpdate());
+			}
+		}
+
+
 		return true;
 	}
 }

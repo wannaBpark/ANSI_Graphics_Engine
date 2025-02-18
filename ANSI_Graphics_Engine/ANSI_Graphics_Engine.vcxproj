@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\object\ansi_object.cpp" />
     <ClCompile Include="engine\scene\test_scene\ansi_test_scene.cpp" />
     <ClCompile Include="engine\common\ansi_common.cpp" />
     <ClCompile Include="engine\scene\ansi_scene.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\object\ansi_object.h" />
     <ClInclude Include="engine\scene\test_scene\ansi_test_scene.h" />
     <ClInclude Include="engine\scene\ansi_scene.h" />
     <ClInclude Include="engine\core\gui\ansi_gui.h" />
