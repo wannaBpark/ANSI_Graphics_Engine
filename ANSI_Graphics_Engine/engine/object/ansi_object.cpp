@@ -1,6 +1,6 @@
 #include "ansi_object.h"
 
-#include "object/component/ansi_component.h"
+#include "object/component/transform/ansi_transform.h"
 
 namespace ansi
 {
@@ -13,7 +13,7 @@ namespace ansi
 		, m_children()
 		, m_components()
 		, m_parent(nullptr)
-		, m_transform(nullptr)
+		, m_transform(AddComponent<Transform>())
 	{
 
 	}

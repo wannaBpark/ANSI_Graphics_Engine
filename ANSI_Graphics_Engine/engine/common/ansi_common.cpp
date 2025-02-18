@@ -32,3 +32,58 @@ bool CheckGLFWError(const char* filePath, int lineNumber)
 	return false;
 }
 
+glm::quat EulerToQuat(const glm::vec3& rotation, EulerOrder order)
+{
+	static glm::vec3 radianRotation(0.0f);
+	static glm::quat result(1.0f, 0.0f, 0.0f, 0.0f);
+
+	radianRotation = glm::radians(rotation);
+	const float c1 = cosf(radianRotation.x * 0.5f);
+	const float c2 = cosf(radianRotation.y * 0.5f);
+	const float c3 = cosf(radianRotation.z * 0.5f);
+	const float s1 = sinf(radianRotation.x * 0.5f);
+	const float s2 = sinf(radianRotation.y * 0.5f);
+	const float s3 = sinf(radianRotation.z * 0.5f);
+
+	switch (order)
+	{
+		case EulerOrder::XYZ: {
+			result.x = s1 * c2 * c3 + c1 * s2 * s3;
+			result.y = c1 * s2 * c3 - s1 * c2 * s3;
+			result.z = c1 * c2 * s3 + s1 * s2 * c3;
+			result.w = c1 * c2 * c3 - s1 * s2 * s3;
+		} break;
+		case EulerOrder::YXZ: {
+			result.x = s1 * c2 * c3 + c1 * s2 * s3;
+			result.y = c1 * s2 * c3 - s1 * c2 * s3;
+			result.z = c1 * c2 * s3 - s1 * s2 * c3;
+			result.w = c1 * c2 * c3 + s1 * s2 * s3;
+		} break;
+		case EulerOrder::ZXY: {
+			result.x = s1 * c2 * c3 - c1 * s2 * s3;
+			result.y = c1 * s2 * c3 + s1 * c2 * s3;
+			result.z = c1 * c2 * s3 + s1 * s2 * c3;
+			result.w = c1 * c2 * c3 - s1 * s2 * s3;
+		} break;
+		case EulerOrder::ZYX: {
+			result.x = s1 * c2 * c3 - c1 * s2 * s3;
+			result.y = c1 * s2 * c3 + s1 * c2 * s3;
+			result.z = c1 * c2 * s3 - s1 * s2 * c3;
+			result.w = c1 * c2 * c3 + s1 * s2 * s3;
+		} break;
+		case EulerOrder::YZX: {
+			result.x = s1 * c2 * c3 + c1 * s2 * s3;
+			result.y = c1 * s2 * c3 + s1 * c2 * s3;
+			result.z = c1 * c2 * s3 - s1 * s2 * c3;
+			result.w = c1 * c2 * c3 - s1 * s2 * s3;
+		} break;
+		case EulerOrder::XZY: {
+			result.x = s1 * c2 * c3 - c1 * s2 * s3;
+			result.y = c1 * s2 * c3 - s1 * c2 * s3;
+			result.z = c1 * c2 * s3 + s1 * s2 * c3;
+			result.w = c1 * c2 * c3 + s1 * s2 * s3;
+		} break;
+	}
+
+	return result;
+}

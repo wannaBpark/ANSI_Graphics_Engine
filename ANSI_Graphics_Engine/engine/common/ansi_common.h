@@ -36,15 +36,26 @@
 #include <vector>        // Vector              - 동적 배열
 #include <unordered_map> // Unordered Map       - 해시 테이블
 
-/* OpenGL 함수 실행 후 에러를 검사하는 함수 */
-bool CheckGLError(const char* filePath, int lineNumber);
-/* GLFW 함수 실행 후 에러를 검사하는 함수 */
-bool CheckGLFWError(const char* filePath, int lineNumber);
+/* 오일러 각 회전 순서 */
+enum class EulerOrder { XYZ, XZY, YXZ, YZX, ZXY, ZYX };
 
-/* 제거 - 단일 객체 제거 */
-#define SAFE_DELETE(ptr) if (ptr) { delete (ptr); (ptr) = nullptr; }
-/* 제거 - 배열 객체 제거 */
-#define SAFE_DELETE_ARRAY(ptrs) if (ptrs) { delete[] (ptrs); (ptrs) = nullptr; }
+
+constexpr float PI { 3.141592f };									/* PI */
+constexpr float PI2{ 6.2831853f };									/* PI * 2 */
+
+/* 오일러 각을 쿼터니언으로 변환하는 함수 
+* @param rotation - 오일러 각
+* @param order - 오일러 각 회전 순서 
+* @returns 쿼터니언
+*/
+glm::quat EulerToQuat(const glm::vec3& rotation, EulerOrder order);
+
+bool CheckGLError(const char* filePath, int lineNumber);			/* OpenGL 함수 실행 후 에러를 검사하는 함수 */
+bool CheckGLFWError(const char* filePath, int lineNumber);			/* GLFW 함수 실행 후 에러를 검사하는 함수 */
+
+
+#define SAFE_DELETE(ptr) if (ptr) { delete (ptr); (ptr) = nullptr; }				/* 제거 - 단일 객체 제거 */
+#define SAFE_DELETE_ARRAY(ptrs) if (ptrs) { delete[] (ptrs); (ptrs) = nullptr; }	/* 제거 - 배열 객체 제거 */
 
 /* 콘솔 - 문자열 출력 */
 #define PRINT(str) std::cout << (str) << std::endl;
