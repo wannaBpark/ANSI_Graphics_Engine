@@ -20,7 +20,7 @@ namespace ansi
 	Window::~Window()
 	{
 		SAFE_DELETE(m_currentScene);
-		SAFE_DELETE(m_nextScene);		// nxtScene 설정된 후 또는 장면 교체 직전 종료될 수 있기 때문에 제거 필요
+		SAFE_DELETE(m_nextScene);		// nextScene 설정된 후 또는 장면 교체 직전 종료될 수 있기 때문에 제거 필요
 		glfwTerminate();
 	}
 
@@ -65,14 +65,15 @@ namespace ansi
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			/* 장면 렌더링 */
-			CHECK_RF(m_currentScene->OnUpdate());
+			CHECK_RF(m_currentScene->OnDefaultUpdate());		// 장면 내의 모든 오브젝트와 그 자식들을 업데이트
+			CHECK_RF(m_currentScene->OnUpdate());				// 그 다음 장면의 업데이트 함수 호출
 
 			/* GUI Rendering */
-			if (Core::GetGui()->OnRenderBegin()) {	// 창이 접혀있다면(반환값=false) GUI 렌더 필요 X
-				CHECK_RF(m_currentScene->OnRenderGui());	// 장면에서 사용하는 GUI 바로 아래 기본 GUI 배치
+			if (Core::GetGui()->OnRenderBegin()) {				// 창이 접혀있다면(반환값=false) GUI 렌더 필요 X
+				CHECK_RF(m_currentScene->OnRenderGui());		// 장면에서 사용하는 GUI 바로 아래 기본 GUI 배치
 				CHECK_RF(OnRenderDefaultGui());
 			}
-			Core::GetGui()->OnRenderEnd();			// End(): Begin()과 페어 함수
+			Core::GetGui()->OnRenderEnd();						// End(): Begin()과 페어 함수
 
 			/* ============================== */
 			/*            HANDLING            */

@@ -138,6 +138,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\object\component\transform\ansi_transform.cpp" />
+    <ClCompile Include="engine\utility\state_checker\ansi_state_checker.cpp" />
+    <ClCompile Include="engine\object\component\ansi_component.cpp" />
     <ClCompile Include="engine\object\ansi_object.cpp" />
     <ClCompile Include="engine\scene\test_scene\ansi_test_scene.cpp" />
     <ClCompile Include="engine\common\ansi_common.cpp" />
@@ -150,6 +153,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\object\component\transform\ansi_transform.h" />
+    <ClInclude Include="engine\utility\state_checker\ansi_state_checker.h" />
+    <ClInclude Include="engine\object\component\ansi_component.h" />
     <ClInclude Include="engine\object\ansi_object.h" />
     <ClInclude Include="engine\scene\test_scene\ansi_test_scene.h" />
     <ClInclude Include="engine\scene\ansi_scene.h" />
@@ -159,6 +165,7 @@
     <ClInclude Include="engine\core\ansi_core.h" />
     <ClInclude Include="engine\common\ansi_common.h" />
     <ClInclude Include="engine\utility\shader_loader\ansi_shader_loader.h" />
+    <ClInclude Include="engine\utility\state_checker\ansi_state_checker_math.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="asset\shader\test.shader" />

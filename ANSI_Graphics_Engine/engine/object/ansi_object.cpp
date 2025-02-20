@@ -34,6 +34,7 @@ namespace ansi
 		return true;
 	}
 
+	/* 오브젝트의 기본 업데이트 : 자식 오브젝트 제거, 업데이트, 컴포넌트 업데이트 등*/
 	bool Object::OnDefaultUpdate()
 	{
 		/* 제거된 모든 자식 오브젝트 제거 */

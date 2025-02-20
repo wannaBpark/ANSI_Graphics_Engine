@@ -1,15 +1,19 @@
 #include "ansi_scene.h"
 #include "core/window/ansi_window.h"
 
+#include "object/ansi_object.h"
+
 namespace ansi
 {
 	Scene::Scene()
+		: m_objects()
 	{
 
 	}
 
 	Scene::~Scene()
 	{
+		for (auto it = m_objects.begin(); it != m_objects.end(); ++it) { SAFE_DELETE(it->second); }
 	}
 
 	bool Scene::CreateResources()
@@ -32,53 +36,26 @@ namespace ansi
 		return true;
 	}
 
-	bool Scene_A::Initialize()
+	bool Scene::OnDefaultUpdate()
 	{
-		PRINT("Current Scene is now A");
-		return true;
-	}
-
-	bool Scene_A::OnUpdate()
-	{
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-1.0f, -0.5f);
-		glVertex2f(-0.5f,  0.5f);
-		glVertex2f( 0.0f, -0.5f);
-		glEnd();
-
-		return true;
-	}
-
-	bool Scene_A::OnRenderGui()
-	{
-		if (ImGui::Button("Change to B")) {
-			Core::GetWindow()->SetNextScene(new Scene_B());
+		/* 제거된 모든 오브젝트 제거 */
+		for (auto it = m_objects.begin(); it != m_objects.end(); ) {
+			if (it->second->GetIsDeleted()) {
+				CHECK_RF(it->second);
+				m_objects.erase(it);
+			}
+			else { ++it; }
 		}
-		return true;
-	}
 
-	bool Scene_B::Initialize()
-	{
-		PRINT("Current Scene is now B");
-		return true;
-	}
-	
-	bool Scene_B::OnUpdate()
-	{
-		glBegin(GL_TRIANGLES);
-		glVertex2f(1.0f, -0.5f);
-		glVertex2f(0.5f, 0.5f);
-		glVertex2f(0.0f, -0.5f);
-		glEnd();
-
-		return true;
-	}
-
-	bool Scene_B::OnRenderGui()
-	{
-		if (ImGui::Button("Change To A")) {
-			Core::GetWindow()->SetNextScene(new Scene_A());
+		/* 활성화된 모든 오브젝트 업데이트 */
+		for (const auto& it : m_objects) {
+			/* 자신의 업데이트를 먼저 하고 */
+			CHECK_RF(it.second->OnUpdate());
+			/* 오브젝트의 업데이트 실행 */
+			CHECK_RF(it.second->OnDefaultUpdate());
 		}
+		
 		return true;
 	}
+
 }

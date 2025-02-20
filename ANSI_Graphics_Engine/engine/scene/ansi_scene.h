@@ -2,6 +2,9 @@
 
 namespace ansi
 {
+
+	class Object;
+
 	class Scene
 	{
 	public:
@@ -13,22 +16,25 @@ namespace ansi
 		virtual bool OnUpdate();
 		virtual bool OnRenderGui();
 
-	};
+		bool OnDefaultUpdate();
 
-	class Scene_A : public Scene
-	{
-	public:
-		virtual bool Initialize() override;
-		virtual bool OnUpdate() override;
-		virtual bool OnRenderGui() override;
-	};
+		template<typename T>
+		T* AddObject(T* object)
+		{
+			return static_cast<T*>(m_objects[object->GetName()] = object);
+		}
 
-	class Scene_B : public Scene
-	{
-	public:
-		virtual bool Initialize() override;
-		virtual bool OnUpdate() override;
-		virtual bool OnRenderGui() override;
+		template<typename T>
+		T* FindObject(const std::string& name)
+		{
+			if (m_objects.count(name) == 0) {
+				return nullptr;
+			}
+			return static_cast<T*>(m_objects[name]);
+		}
+
+	private:
+		std::unordered_map<std::string, Object* > m_objects;
 	};
 }
 
