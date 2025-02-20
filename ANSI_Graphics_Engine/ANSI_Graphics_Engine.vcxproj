@@ -142,7 +142,7 @@
     <ClCompile Include="engine\utility\state_checker\ansi_state_checker.cpp" />
     <ClCompile Include="engine\object\component\ansi_component.cpp" />
     <ClCompile Include="engine\object\ansi_object.cpp" />
-    <ClCompile Include="engine\scene\test_scene\ansi_test_scene.cpp" />
+    <ClCompile Include="engine\scene\test_scene\test_scene.cpp" />
     <ClCompile Include="engine\common\ansi_common.cpp" />
     <ClCompile Include="engine\scene\ansi_scene.cpp" />
     <ClCompile Include="engine\core\gui\ansi_gui.cpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="engine\utility\state_checker\ansi_state_checker.h" />
     <ClInclude Include="engine\object\component\ansi_component.h" />
     <ClInclude Include="engine\object\ansi_object.h" />
-    <ClInclude Include="engine\scene\test_scene\ansi_test_scene.h" />
+    <ClInclude Include="engine\scene\test_scene\test_scene.h" />
     <ClInclude Include="engine\scene\ansi_scene.h" />
     <ClInclude Include="engine\core\gui\ansi_gui.h" />
     <ClInclude Include="engine\core\window\ansi_window.h" />

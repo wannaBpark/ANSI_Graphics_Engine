@@ -2,7 +2,7 @@
 #include "core/timer/ansi_timer.h"
 #include "core/gui/ansi_gui.h"
 #include "scene/ansi_scene.h"
-#include "scene/test_scene/ansi_test_scene.h"
+#include "scene/test_scene/test_scene.h"
 
 namespace ansi 
 {

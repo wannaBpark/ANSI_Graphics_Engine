@@ -2,6 +2,11 @@
 
 #include "scene/ansi_scene.h"
 
+#include "core/ansi_core.h"
+#include "core/timer/ansi_timer.h"
+#include "object/ansi_object.h"
+#include "object/component/transform/ansi_transform.h"
+
 namespace ansi
 {
 	class TestScene: public Scene
@@ -20,6 +25,8 @@ namespace ansi
 		unsigned m_vertexBufferId;
 		unsigned m_indexBufferId;
 		unsigned m_vertexArrayId;
+
+		Object* m_rectangle{ nullptr };
 
 	};
 }

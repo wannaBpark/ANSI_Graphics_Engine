@@ -1,7 +1,7 @@
 /* 'reinterpret_cast': 'unsigned' 에서 더 큰 'unsigned*' 로의 변환 경고 해제 */
 #pragma warning(disable: 4312)
 
-#include "ansi_test_scene.h"
+#include "test_scene.h"
 
 #include "utility/shader_loader/ansi_shader_loader.h"
 
@@ -82,13 +82,39 @@ namespace ansi
 
 	bool TestScene::Initialize()
 	{
+		CHECK_RF(m_rectangle = AddObject(new Object("Rectangle")));
+
 		return true;
 	}
 
 	bool TestScene::OnUpdate()
 	{
+		static bool isGoRight{ false };
+
 		/* 셰이더를 컨텍스트에 장착 */
 		GL_CHECK_RF(glUseProgram(m_shaderId));
+
+		// =============================================
+
+		// 월드 행렬 변경
+		if (isGoRight) {
+			m_rectangle->GetTransform()->AddPositionX(DELTA_TIME);
+			m_rectangle->GetTransform()->AddRotation(DELTA_TIME * 90.0f, DELTA_TIME * 90.0f, DELTA_TIME * 90.0f);
+
+			if (m_rectangle->GetTransform()->GetPosition().x >= 1.0f) { isGoRight = false; }
+		} else {
+			m_rectangle->GetTransform()->AddPositionX(-DELTA_TIME);
+			m_rectangle->GetTransform()->AddRotation(DELTA_TIME * 360.0f, DELTA_TIME * 360.0f, DELTA_TIME * 360.0f);
+
+			if (m_rectangle->GetTransform()->GetPosition().x <= -1.0f) { isGoRight = true; }
+		}
+
+		// 셰이더 유니폼 설정
+		int location = glGetUniformLocation(m_shaderId, "u_worldMatrix");
+		GL_CHECK(glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(m_rectangle->GetTransform()->GetWorldMatrix())));
+
+		// =============================================
+
 
 		/* 버텍스 배열을 컨텍스트에 장착 */
 		GL_CHECK_RF(glBindVertexArray(m_vertexArrayId));
